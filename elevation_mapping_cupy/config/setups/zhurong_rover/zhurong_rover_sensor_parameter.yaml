@@ -1,4 +1,4 @@
-plugin_config_file: '$(rospack find elevation_mapping_cupy)/config/setups/anymal/anymal_plugin_config.yaml'
+plugin_config_file: '$(rospack find elevation_mapping_cupy)/config/setups/zhurong_rover/zhurong_rover_plugin_config.yaml'
 
 pointcloud_channel_fusions:
   rgb: 'color'
@@ -27,16 +27,48 @@ publishers:
     basic_layers: ['inpaint']
     fps: 5.0
 
+  semantic_map_raw:
+    layers: ['elevation', 'traversability', 'variance', 'rgb', 'semantic_rgb',
+            'friction', 'stiffness', 
+            'inpaint', 'scientific_value']
+    basic_layers: ['inpaint']
+    fps: 5.0
+
 #### Subscribers ########
 subscribers:
   front_nav_depth:
     topic_name: /ZED/camera_nav/depth/point_cloud
     data_type: pointcloud
 
-  fron_nav_rgb:
+  front_nav_rgb:
     topic_name: /ZED/camera_nav/rgb/image_raw/compressed
     camera_info_topic_name: /ZED/camera_nav/rgb/camera_info
     data_type: image
+
+  # front_nav_semantic:
+  #   topic_name: /ZED/camera_nav/semantic/semantic_viz
+  #   camera_info_topic_name: /ZED/camera_nav/semantic/camera_info  # TODO: use the throttled one
+  #   data_type: image
+  #   channel_info_topic_name: /ZED/camera_nav/semantic/viz_channel_info
+
+  front_nav_friction:
+    topic_name: /ZED/camera_nav/friction/friction_image
+    camera_info_topic_name: /ZED/camera_nav/semantic/camera_info
+    data_type: image
+    channel_info_topic_name: /ZED/camera_nav/friction/channel_info
+  
+  front_nav_stiffness:
+    topic_name: /ZED/camera_nav/stiffness/stiffness_image
+    camera_info_topic_name: /ZED/camera_nav/semantic/camera_info  # TODO: use the throttled one
+    data_type: image
+    channel_info_topic_name: /ZED/camera_nav/stiffness/channel_info
+
+  front_nav_scientific_value:
+    # here I get the semantic probability and tranform to scientific value through plugin, so that the previous information in map can be updated as well
+    topic_name: /ZED/camera_nav/science/semantic_prob  # 0 - no rock; >0 - has rock with value
+    camera_info_topic_name: /ZED/camera_nav/rgb/camera_info  # TODO: use the throttled one
+    data_type: image
+    channel_info_topic_name: /ZED/camera_nav/science/channel_info
 
   # velodyne:
   #   topic_name: /point_cloud_filter/lidar/point_cloud_filtered
