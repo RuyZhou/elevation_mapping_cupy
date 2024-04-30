@@ -22,6 +22,11 @@ class ScientificFilter(PluginBase):
             elif cls == "scientific_rock":
                 vmap[i] = 1.0
         return cp.asarray(vmap)
+    
+    def update_value_map(self, class_name, scientific_value):
+        # get the index of the class
+        index = self.classes.index(class_name)
+        self.value_encoding[index] = scientific_value
 
     def get_layer_indices(self, layer_names: List[str]) -> List[int]:
         indices = []
