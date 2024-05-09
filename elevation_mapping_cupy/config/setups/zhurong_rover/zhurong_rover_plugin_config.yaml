@@ -45,3 +45,24 @@ scientific_filter:
   layer_name: "scientific_value"
   extra_params:
     classes: ['_background_', 'normal_rock', 'scientific_rock']
+
+# Apply physical traversability
+physical_traversability:
+  enable: False
+  fill_nan: False
+  is_height_layer: False
+  layer_name: "physical_traversability"
+  extra_params:
+    friction_layer_name: "friction"
+    stiffness_layer_name: "stiffness"
+    friction_threshold: 0.5
+    stiffness_threshold: 0.5
+
+geometry_traversability:
+  enable: True
+  fill_nan: False
+  is_height_layer: False
+  layer_name: "geometry_traversability"
+  extra_params:
+    input_layer_name: "inpaint"
+    height_threshold: -0.25

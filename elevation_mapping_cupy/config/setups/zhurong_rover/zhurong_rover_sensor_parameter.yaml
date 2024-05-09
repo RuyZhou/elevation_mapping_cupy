@@ -9,6 +9,7 @@ image_channel_fusions:
   default: 'exponential'
   feat_.*: 'exponential'
   sem_.*: 'exponential'
+  # semantic_rgb: 'color'
 
 #### Publishers ########
 # topic_name:
@@ -30,7 +31,7 @@ publishers:
   semantic_map_raw:
     layers: ['elevation', 'traversability', 'variance', 'rgb', 'semantic_rgb',
             'friction', 'stiffness', 
-            'inpaint', 'scientific_value']
+            'inpaint', 'scientific_value', 'geometry_traversability']
     basic_layers: ['inpaint']
     fps: 5.0
 
