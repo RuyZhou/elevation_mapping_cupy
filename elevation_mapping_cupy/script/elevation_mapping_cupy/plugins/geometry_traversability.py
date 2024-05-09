@@ -34,8 +34,9 @@ class GeometryTraversability(PluginBase):
     
     def transform_traversability(self, height_layer):
         # print('height_layer: ', cp.unique(height_layer))
-        traversability_layer = cp.ones_like(height_layer, dtype=cp.float32)
-        low_value = cp.where(height_layer < self.height_threshold, 0, 1)
+        # print('height_layer: ', height_layer)
+        traversability_layer = cp.ones_like(height_layer, dtype=cp.float32)  # traversable - 1, non-traversable - 0
+        low_value = cp.where(height_layer > self.height_threshold, 0, 1)
         nan_value = cp.where(cp.isnan(height_layer), 0, 1)
         traversability_layer = traversability_layer * low_value * nan_value
         return traversability_layer
@@ -61,4 +62,9 @@ class GeometryTraversability(PluginBase):
         else:
             raise ValueError(f"Layer {self.input_layer_name} not found.")
         # print('traversability: ', cp.unique(traversability_layer))
+        # print('-----------------------')
+        # print('traversability shape: ', traversability_layer.shape)
+        # print('traversability: ', cp.sum(traversability_layer == 1))
+        # print('non traversability: ', cp.sum(traversability_layer == 0))
+        # print('sum up: ', cp.sum(traversability_layer == 1) + cp.sum(traversability_layer == 0))
         return traversability_layer
