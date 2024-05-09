@@ -41,6 +41,10 @@ subscribers:
     topic_name: /ZED/camera_nav/depth/point_cloud
     data_type: pointcloud
 
+  back_obstacle_depth:
+    topic_name: /ZED/camera_obs_b/depth/point_cloud
+    data_type: pointcloud
+
   front_nav_rgb:
     topic_name: /ZED/camera_nav/rgb/image_raw/compressed
     camera_info_topic_name: /ZED/camera_nav/rgb/camera_info
