@@ -3,6 +3,7 @@
 import cupy as cp
 from typing import List
 import re
+import time
 
 from elevation_mapping_cupy.plugins.plugin_manager import PluginBase
 
@@ -35,10 +36,14 @@ class GeometryTraversability(PluginBase):
     def transform_traversability(self, height_layer):
         # print('height_layer: ', cp.unique(height_layer))
         # print('height_layer: ', height_layer)
+        # tic = time.time()
+        w, h = height_layer.shape
+        center_height = height_layer[int(w/2-1), int(h/2-1)]
         traversability_layer = cp.ones_like(height_layer, dtype=cp.float32)  # traversable - 1, non-traversable - 0
-        low_value = cp.where(height_layer > self.height_threshold, 0, 1)
+        low_value = cp.where(height_layer-center_height > 0.05, 0, 1)
         nan_value = cp.where(cp.isnan(height_layer), 0, 1)
         traversability_layer = traversability_layer * low_value * nan_value
+        # print('Time elapsed: ', time.time() - tic)
         return traversability_layer
     
     def __call__(
