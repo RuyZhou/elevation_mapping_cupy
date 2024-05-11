@@ -12,12 +12,10 @@ class GeometryTraversability(PluginBase):
     def __init__(
         self,
         input_layer_name,
-        height_threshold,
         **kwargs,
     ):
         super().__init__()
         self.input_layer_name = input_layer_name
-        self.height_threshold = float(height_threshold)
 
     def get_layer_indice(self, layer_names: List[str], target_layer_name) -> List[int]:
         """ Get the indices of the layers that are to be processed using regular expressions.
