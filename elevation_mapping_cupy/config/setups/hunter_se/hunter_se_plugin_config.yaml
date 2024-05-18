@@ -67,7 +67,7 @@ geometry_traversability:
     input_layer_name: "inpaint"
 
 rgb_color_filter:
-  enable: True
+  enable: False  # True
   fill_nan: false
   is_height_layer: False
   layer_name: "color_rgb"
