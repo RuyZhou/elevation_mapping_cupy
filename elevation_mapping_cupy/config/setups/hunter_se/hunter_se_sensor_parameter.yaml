@@ -38,7 +38,7 @@ publishers:
 #### Subscribers ########
 subscribers:
   front_nav_depth:
-    topic_name: /ZED/camera_nav/depth/points
+    topic_name: /zed2i/zed_node/point_cloud/cloud_registered
     data_type: pointcloud
 
   # back_obstacle_depth:
@@ -46,8 +46,8 @@ subscribers:
   #   data_type: pointcloud
 
   front_nav_rgb:
-    topic_name: /ZED/camera_nav/rgb/image_raw/compressed
-    camera_info_topic_name: /ZED/camera_nav/rgb/camera_info
+    topic_name: /zed2i/zed_node/rgb/image_rect_color/compressed
+    camera_info_topic_name: /zed2i/zed_node/rgb/camera_info
     data_type: image
 
   # front_nav_semantic:
@@ -76,5 +76,5 @@ subscribers:
   #   channel_info_topic_name: /ZED/camera_nav/science/channel_info
 
   velodyne:
-    topic_name: /mid/points
+    topic_name: /velodyne_points
     data_type: pointcloud
