@@ -19,7 +19,7 @@ image_channel_fusions:
 
 publishers:
   elevation_map_raw:
-    layers: ['elevation', 'traversability', 'variance', 'rgb']
+    layers: ['elevation', 'traversability', 'variance', 'rgb', 'color_rgb']
     basic_layers: ['elevation', 'traversability']
     fps: 5.0
 
@@ -29,7 +29,7 @@ publishers:
   #   fps: 5.0
 
   semantic_map_raw:
-    layers: ['elevation', 'traversability', 'variance', 'rgb', 'semantic_rgb',
+    layers: ['elevation', 'traversability', 'variance', 'rgb', 'semantic_rgb', 'color_rgb',
             'friction', 'stiffness', 
             'inpaint', 'scientific_value', 'geometry_traversability']
     basic_layers: ['inpaint']
@@ -49,6 +49,7 @@ subscribers:
     topic_name: /zed2i/zed_node/rgb/image_rect_color/compressed
     camera_info_topic_name: /zed2i/zed_node/rgb/camera_info
     data_type: image
+    channel_info_topic_name: /zed2i/zed_node/rgb/channel_info
 
   # front_nav_semantic:
   #   topic_name: /ZED/camera_nav/semantic/semantic_viz

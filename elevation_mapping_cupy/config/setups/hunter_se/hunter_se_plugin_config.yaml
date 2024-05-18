@@ -65,3 +65,11 @@ geometry_traversability:
   layer_name: "geometry_traversability"
   extra_params:
     input_layer_name: "inpaint"
+
+rgb_color_filter:
+  enable: True
+  fill_nan: false
+  is_height_layer: False
+  layer_name: "color_rgb"
+  extra_params:
+    channels: ['r', 'g', 'b']
