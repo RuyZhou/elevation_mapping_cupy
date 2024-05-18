@@ -65,4 +65,3 @@ geometry_traversability:
   layer_name: "geometry_traversability"
   extra_params:
     input_layer_name: "inpaint"
-    height_threshold: -0.25
