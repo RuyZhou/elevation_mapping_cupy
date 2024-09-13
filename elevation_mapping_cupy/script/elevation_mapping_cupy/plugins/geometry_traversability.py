@@ -3,7 +3,6 @@
 import cupy as cp
 from typing import List
 import re
-import time
 
 from elevation_mapping_cupy.plugins.plugin_manager import PluginBase
 
@@ -31,17 +30,13 @@ class GeometryTraversability(PluginBase):
                 break
         return indices
     
-    def transform_traversability(self, height_layer):
-        # print('height_layer: ', cp.unique(height_layer))
-        # print('height_layer: ', height_layer)
-        # tic = time.time()
+    def transform_traversability(self, height_layer, is_valid):
         w, h = height_layer.shape
         center_height = height_layer[int(w/2-1), int(h/2-1)]
         traversability_layer = cp.ones_like(height_layer, dtype=cp.float32)  # traversable - 1, non-traversable - 0
         low_value = cp.where(height_layer-center_height > 0.05, 0, 1)
-        nan_value = cp.where(cp.isnan(height_layer), 0, 1)
-        traversability_layer = traversability_layer * low_value * nan_value
-        # print('Time elapsed: ', time.time() - tic)
+        not_valid_value = cp.where(is_valid, 0, 1)
+        traversability_layer = traversability_layer * low_value * not_valid_value
         return traversability_layer
     
     def __call__(
@@ -54,14 +49,18 @@ class GeometryTraversability(PluginBase):
     ) -> cp.ndarray:
         height_layer = None
         traversability_layer = None
+        is_valid_layer = None
         for m, layer_names in zip(
             [elevation_map, plugin_layers], [layer_names, plugin_layer_names]
         ):
             layer_index = self.get_layer_indice(layer_names, self.input_layer_name)
             if layer_index is not None:
                 height_layer = m[layer_index]
-        if height_layer is not None:
-            traversability_layer = self.transform_traversability(height_layer)
+            layer_index = self.get_layer_indice(layer_names, 'is_valid')
+            if layer_index is not None:
+                is_valid_layer = m[layer_index]
+        if (height_layer is not None) and (is_valid_layer is not None):
+            traversability_layer = self.transform_traversability(height_layer, is_valid_layer)
         else:
             raise ValueError(f"Layer {self.input_layer_name} not found.")
         # print('traversability: ', cp.unique(traversability_layer))
