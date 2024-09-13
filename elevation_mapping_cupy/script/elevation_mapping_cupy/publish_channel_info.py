@@ -7,7 +7,7 @@ from elevation_map_msgs.msg import ChannelInfo
 class ChannelInfoPub():
     def __init__(self):
         self.timer = rospy.Timer(rospy.Duration(1/15), self.publish_channel_info)
-        self.channel_info_pub = rospy.Publisher('/zed2i/zed_node/rgb/channel_info', ChannelInfo, queue_size=1)
+        self.channel_info_pub = rospy.Publisher('/zed2/zed_node/rgb/channel_info', ChannelInfo, queue_size=1)
         
         channel_info = ChannelInfo()
         channel_info.channels = ['r', 'g', 'b', 'a']
