@@ -62,13 +62,13 @@ subscribers:
   #   topic_name: /ZED/camera_nav/friction/friction_image
   #   camera_info_topic_name: /ZED/camera_nav/semantic/camera_info
   #   data_type: image
-  #   channel_info_topic_name: /ZED/camera_nav/friction/channel_info
+  #   channels: ["friction"]
   
   # front_nav_stiffness:
   #   topic_name: /ZED/camera_nav/stiffness/stiffness_image
   #   camera_info_topic_name: /ZED/camera_nav/semantic/camera_info  # TODO: use the throttled one
   #   data_type: image
-  #   channel_info_topic_name: /ZED/camera_nav/stiffness/channel_info
+  #   channels: ["stiffness"]
 
   # front_nav_scientific_value:
   #   # here I get the semantic probability and tranform to scientific value through plugin, so that the previous information in map can be updated as well
