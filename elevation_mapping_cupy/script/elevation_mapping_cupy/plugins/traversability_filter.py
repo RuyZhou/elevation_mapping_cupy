@@ -36,11 +36,8 @@ class TraversabilityFilter(PluginBase):
         traversability_layer = cp.ones_like(raw_traversability_layer, dtype=cp.float32)
         low_value = cp.where(raw_traversability_layer < self.traversability_threshold, 0, 1)
         not_valid_value = cp.where(is_valid, 0, 1)
-        # traversability_layer = traversability_layer * low_value * nan_value
-        # traversability_layer = traversability_layer * low_value
         traversability_layer = traversability_layer * low_value + not_valid_value
         traversability_layer = cp.where(traversability_layer > 0.5, 1, 0)
-        # traversability_layer = traversability_layer * valid_value
         return traversability_layer
     
     def __call__(
