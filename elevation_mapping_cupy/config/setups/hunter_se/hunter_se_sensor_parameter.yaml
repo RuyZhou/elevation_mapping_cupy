@@ -31,7 +31,7 @@ publishers:
   semantic_map_raw:
     layers: ['elevation', 'traversability', 'variance', 'rgb', 'semantic_rgb',
             'friction', 'stiffness', 
-            'inpaint', 'scientific_value', 'geometry_traversability', 'binary_traversability']
+            'inpaint', 'scientific_value', 'geometry_traversability']
     basic_layers: ['inpaint']
     fps: 5.0
 
@@ -46,11 +46,11 @@ subscribers:
   #   topic_name: /ZED/camera_obs_b/depth/point_cloud
   #   data_type: pointcloud
 
-  # front_nav_rgb:
-  #   topic_name: /zed2/zed_node/rgb/image_rect_color/compressed
-  #   camera_info_topic_name: /zed2/zed_node/rgb/camera_info
-  #   data_type: image
-  #   channels: ["rgb", "a"]
+  front_nav_rgb:
+    topic_name: /zed2/zed_node/rgb/image_rect_color/compressed
+    camera_info_topic_name: /zed2/zed_node/rgb/camera_info
+    data_type: image
+    channels: ["rgb", "a"]
 
   # front_nav_semantic:
   #   topic_name: /ZED/camera_nav/semantic/semantic_viz
@@ -77,6 +77,6 @@ subscribers:
   #   data_type: image
   #   channel_info_topic_name: /ZED/camera_nav/science/channel_info
 
-  velodyne:
-    topic_name: /velodyne_points
-    data_type: pointcloud
+  # velodyne:
+  #   topic_name: /velodyne_points
+  #   data_type: pointcloud

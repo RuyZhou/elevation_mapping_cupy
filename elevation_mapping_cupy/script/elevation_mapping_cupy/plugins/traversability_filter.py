@@ -3,6 +3,7 @@
 import cupy as cp
 from typing import List
 import re
+import cupyx.scipy.ndimage as ndimage
 
 from elevation_mapping_cupy.plugins.plugin_manager import PluginBase
 
@@ -36,9 +37,26 @@ class TraversabilityFilter(PluginBase):
         traversability_layer = cp.ones_like(raw_traversability_layer, dtype=cp.float32)
         low_value = cp.where(raw_traversability_layer < self.traversability_threshold, 0, 1)
         not_valid_value = cp.where(is_valid, 0, 1)
+        
         traversability_layer = traversability_layer * low_value + not_valid_value
         traversability_layer = cp.where(traversability_layer > 0.5, 1, 0)
+        
+        # smooth traversability
+        traversability_layer = self.smooth_input(traversability_layer, iteration=2)
+
+        # normalize the value
+        max = cp.max(traversability_layer)
+        min = cp.min(traversability_layer)
+        traversability_layer = (traversability_layer - min) / (max - min) 
+
         return traversability_layer
+    
+    def smooth_input(self, input, iteration=2):
+        input1 = ndimage.uniform_filter(input, size=3)
+        if iteration > 1:
+            for i in cp.arange(iteration - 1):
+                input1 = ndimage.uniform_filter(input1, size=3)
+        return input1
     
     def __call__(
         self,

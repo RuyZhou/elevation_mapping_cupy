@@ -65,9 +65,10 @@ geometry_traversability:
   layer_name: "geometry_traversability"
   extra_params:
     input_layer_name: "inpaint"
+    height_threshold: 0.2
 
 traversability_filter:
-  enable: True
+  enable: False
   fill_nan: false
   is_height_layer: false
   layer_name: "binary_traversability"
